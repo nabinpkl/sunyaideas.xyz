@@ -5,7 +5,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 <!-- END:nextjs-agent-rules -->
 
 
-# Sunya
+# Sunya Ideas
 
 A product lab exploring one question: can a cryptographic commitment
 registry for idea-priority evidence be delivered to users honestly,
@@ -190,7 +190,7 @@ a new contract generation, not a v0 refactor.
   variable in globals.css can achieve the same result
 
 ## Frontend libs
-
+- Next.js 16+
 - pnpm as package manager
 - Tailwind CSS v4+ (css first)
 - TanStack Query, Zustand

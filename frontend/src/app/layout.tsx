@@ -24,8 +24,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sunyanotes | Zero Knowledge Note-taking App",
-  description: "Sunyanotes is a zero-knowledge note-taking app that prioritizes user privacy and security. With end-to-end encryption.",
+  title: "SunyaIdeas | Zero Knowledge Idea-saving App",
+  description: "SunyaIdeas is a zero-knowledge idea saving app that prioritizes user privacy and security.",
 };
 
 export default async function RootLayout({

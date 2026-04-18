@@ -2,15 +2,14 @@
 
 import { useState } from "react"
 import { TopBar } from "./top-bar"
-import { NotesGrid } from "@/components/notes/notes-grid"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function AppShell() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-  const [activeFilter, setActiveFilter] = useState("notes")
+  const [activeFilter, setActiveFilter] = useState("ideas")
 
   const filters = [
-    { id: "notes", label: "Notes" },
+    { id: "ideas", label: "Ideas" },
     { id: "tags", label: "Tags" },
     { id: "archive", label: "Archive" },
     { id: "bin", label: "Bin" },
@@ -40,7 +39,6 @@ export function AppShell() {
               all encrypted
             </span>
           </nav>
-          <NotesGrid viewMode={viewMode} />
         </main>
       </ScrollArea>
     </div>

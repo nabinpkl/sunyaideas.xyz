@@ -1,4 +1,8 @@
 
+#
+Just hash it offline save it don't need to upload to our site too.
+
+
 # Branding
 - Centralized note taking app exists - yes
 - decentralized note taking apps exists yes
