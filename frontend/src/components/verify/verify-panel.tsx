@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { type Hex } from "viem"
+import { type Address, type Hex } from "viem"
 import { useAccount, useChainId, useSwitchChain } from "wagmi"
 import { useAppKit } from "@reown/appkit/react"
 import { PayloadInput, type Payload } from "../shared/payload-input"
@@ -16,11 +16,12 @@ import {
   type SupportedChainId,
 } from "@/lib/chains"
 import { VerifyResult } from "./verify-result"
+import { ManualScopeDialog, type ManualScope } from "./manual-scope-dialog"
 
 type Phase =
   | { kind: "idle" }
   | { kind: "searching"; payloadHash: Hex }
-  | { kind: "result"; payloadHash: Hex; matches: CommitRecord[] }
+  | { kind: "result"; payloadHash: Hex; matches: CommitRecord[]; identity: Address | null }
   | { kind: "error"; message: string }
 
 export function VerifyPanel() {
@@ -29,8 +30,16 @@ export function VerifyPanel() {
   const chainId = useChainId()
   const { switchChain, isPending: isSwitching } = useSwitchChain()
 
-  const onSupportedChain = isSupportedChainId(chainId)
-  const activeChainId = onSupportedChain ? (chainId as SupportedChainId) : null
+  const [manual, setManual] = useState<ManualScope | null>(null)
+  const [manualOpen, setManualOpen] = useState(false)
+
+  const walletChainIsSupported = isSupportedChainId(chainId)
+  const walletChainId = walletChainIsSupported
+    ? (chainId as SupportedChainId)
+    : null
+  const activeChainId: SupportedChainId | null =
+    manual?.chainId ?? walletChainId
+  const identityFilter: Address | null = manual?.identity ?? null
   const networkName = activeChainId ? chainShortName(activeChainId) : ""
   const fallbackChain = supportedChains[0]
 
@@ -52,14 +61,16 @@ export function VerifyPanel() {
     if (!payload || !activeChainId) return
     const id = ++runSeq.current
     const payloadHash = payload.hash
+    const identity = identityFilter
     setPhase({ kind: "searching", payloadHash })
     try {
       const matches = await findCommitsOnChain({
         chainId: activeChainId,
         payloadHash,
+        ...(identity ? { identity } : {}),
       })
       if (runSeq.current !== id) return
-      setPhase({ kind: "result", payloadHash, matches })
+      setPhase({ kind: "result", payloadHash, matches, identity })
     } catch (e: unknown) {
       if (runSeq.current !== id) return
       const err = e as { shortMessage?: string; message?: string }
@@ -88,13 +99,21 @@ export function VerifyPanel() {
         </p>
       </header>
 
-      {!isConnected ? (
-        <button
-          onClick={() => open()}
-          className="self-start h-10 px-5 rounded-sm bg-foreground text-background text-[14px] font-medium hover:opacity-90 transition-opacity"
-        >
-          Connect wallet to pick a chain
-        </button>
+      {!isConnected && !manual ? (
+        <div className="flex flex-col items-start gap-3">
+          <button
+            onClick={() => open()}
+            className="h-10 px-5 rounded-sm bg-foreground text-background text-[14px] font-medium hover:opacity-90 transition-opacity"
+          >
+            Connect wallet to start
+          </button>
+          <button
+            onClick={() => setManualOpen(true)}
+            className="text-[13px] text-muted-foreground hover:text-foreground underline underline-offset-4"
+          >
+            Verify without connecting →
+          </button>
+        </div>
       ) : !activeChainId ? (
         <div className="flex items-center justify-between gap-4 px-5 h-14 border border-border rounded-sm bg-muted/30">
           <span className="text-[14px] text-muted-foreground">
@@ -112,6 +131,38 @@ export function VerifyPanel() {
         </div>
       ) : (
         <div className="flex flex-col gap-4">
+          {manual && (
+            <div className="flex items-center justify-between gap-4 px-4 h-11 border border-border rounded-sm bg-muted/30">
+              <div className="flex items-baseline gap-2 text-[12px] min-w-0">
+                <span className="text-muted-foreground shrink-0">
+                  Reading {chainShortName(manual.chainId)}
+                </span>
+                {manual.identity && (
+                  <span className="font-mono text-foreground/80 truncate">
+                    · {manual.identity}
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center gap-3 shrink-0">
+                <button
+                  onClick={() => setManualOpen(true)}
+                  className="text-[12px] text-foreground hover:underline underline-offset-4"
+                >
+                  Change
+                </button>
+                <button
+                  onClick={() => {
+                    setManual(null)
+                    resetResult()
+                  }}
+                  className="text-[12px] text-muted-foreground hover:text-foreground"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+          )}
+
           <PayloadInput payload={payload} onPayload={onPayload} disabled={busy} />
 
           {payloadHash && (
@@ -145,10 +196,21 @@ export function VerifyPanel() {
               payloadHash={phase.payloadHash}
               matches={phase.matches}
               chainId={activeChainId}
+              identityFilter={phase.identity}
             />
           )}
         </div>
       )}
+
+      <ManualScopeDialog
+        open={manualOpen}
+        onOpenChange={setManualOpen}
+        initial={manual}
+        onConfirm={(scope) => {
+          setManual(scope)
+          resetResult()
+        }}
+      />
     </section>
   )
 }
