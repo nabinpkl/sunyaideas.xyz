@@ -30,11 +30,11 @@ and ui changes
 
 
 # LI.FI usecase
-Best pricing — LI.FI compares rates across 31 DEXs and 27 bridges simultaneously, finding the cheapest route you'd miss using one DEX
-Cross-chain — A single DEX only works on one chain. LI.FI handles multi-chain transfers (e.g., ETH on Ethereum → USDC on Arbitrum) in one transaction
-Split routes — It can split a trade across multiple DEXs for better pricing on large amounts
-One integration — Instead of integrating Uniswap, SushiSwap, 1inch, Stargate, etc. separately, you integrate LI.FI once and get all of them
-Fallback/reliability — If one bridge is down, it automatically routes through another
+Best pricing  LI.FI compares rates across 31 DEXs and 27 bridges simultaneously, finding the cheapest route you'd miss using one DEX
+Cross-chain  A single DEX only works on one chain. LI.FI handles multi-chain transfers (e.g., ETH on Ethereum → USDC on Arbitrum) in one transaction
+Split routes  It can split a trade across multiple DEXs for better pricing on large amounts
+One integration  Instead of integrating Uniswap, SushiSwap, 1inch, Stargate, etc. separately, you integrate LI.FI once and get all of them
+Fallback/reliability  If one bridge is down, it automatically routes through another
 
 MPC
 AA
@@ -49,11 +49,11 @@ Nostr
 
 EIP-712
 
-Solution 1 — Stealth Addresses (EIP-5564)
+Solution 1  Stealth Addresses (EIP-5564)
 
 ecrecover
 
-The Solution — CREATE2 Same Address on ALL Chains
+The Solution  CREATE2 Same Address on ALL Chains
 CREATE2 produces deterministic contract addresses from a salt. Same salt = same address on every EVM chain:
 
 New UX (Circle Paymaster + ERC-4337):
@@ -69,7 +69,7 @@ mapping(bytes32 => bytes32) private _pointers;
 
 This Is Exactly Why Oasis Sapphire Exists
 
-This already exists — it is called a commit-reveal scheme + keeper pattern. And with Chainlink Automation or Gelato's decentralized keeper network, the trigger itself is decentralized.
+This already exists  it is called a commit-reveal scheme + keeper pattern. And with Chainlink Automation or Gelato's decentralized keeper network, the trigger itself is decentralized.
 
 #
 
@@ -98,7 +98,7 @@ Loose key binding:   recovery possible, but how do you authorize it?
 
 ### The Solutions
 
-**Solution 1 — Secret Recovery Phrase (Already Planned — Phase 4)**
+**Solution 1  Secret Recovery Phrase (Already Planned  Phase 4)**
 
 This is the cleanest answer and you already have it in the roadmap:
 
@@ -121,7 +121,7 @@ Phrase lost + wallet lost?
 
 This completely separates authentication (wallet) from encryption (phrase). Wallet changes are free.
 
-**Solution 2 — Contract-Managed Key Rotation**
+**Solution 2  Contract-Managed Key Rotation**
 
 ```solidity
 contract SunyaPointer {
@@ -142,7 +142,7 @@ contract SunyaPointer {
 
 But this only rotates the **pointer authorization**. The vault is still encrypted with old VMK. New wallet cannot decrypt.  Contract rotation alone does not solve decryption. [par.nsf](https://par.nsf.gov/servlets/purl/10451529)
 
-**Solution 3 — Re-encrypt Vault With New Key**
+**Solution 3  Re-encrypt Vault With New Key**
 
 ```
 User has both old and new wallet simultaneously:
@@ -155,7 +155,7 @@ User has both old and new wallet simultaneously:
 
 Works perfectly but requires both wallets active at same time.  Not useful if old wallet is lost. [coinsbench](https://coinsbench.com/accessing-private-data-in-smart-contracts-e346f3ac7910)
 
-**Solution 4 — Social Recovery (Contract-Based)**
+**Solution 4  Social Recovery (Contract-Based)**
 
 This is what Vitalik proposed and Argent wallet implements: [x](https://x.com/safe/status/1877342297668370553)
 
@@ -180,7 +180,7 @@ contract SunyaPointer {
 }
 ```
 
-Still does not solve VMK re-encryption though. Same problem — guardians authorize new wallet but cannot re-encrypt the vault. [pdtn](https://pdtn.org/smart-contracts-privacy/)
+Still does not solve VMK re-encryption though. Same problem  guardians authorize new wallet but cannot re-encrypt the vault. [pdtn](https://pdtn.org/smart-contracts-privacy/)
 
 ### The Honest Architecture Decision
 
@@ -203,7 +203,7 @@ RIGHT design:
 
 ### The Contract Enhancement For This
 
-The contract stores ONE extra thing — an encrypted copy of the BIP39 phrase itself, encrypted to the wallet:
+The contract stores ONE extra thing  an encrypted copy of the BIP39 phrase itself, encrypted to the wallet:
 
 ```
 contract stores:
@@ -221,7 +221,7 @@ When user rotates wallet: [ethereum](https://ethereum.org/developers/docs/smart-
 ```
 1. Decrypt vault with BIP39-derived VMK (unchanged)
 2. Update contract: new wallet authorized for locatorId
-3. Done — vault never needed re-encryption
+3. Done  vault never needed re-encryption
    because VMK was NEVER tied to wallet in first place
 ```
 
@@ -242,9 +242,9 @@ Wallet keypair (can be rotated freely)
 Contract authorization ← controls who can update the pointer
 ```
 
-These two layers are completely independent. VMK never changes. Wallet can change any time. The contract just tracks which wallet is currently authorized to update which locatorId. Smart contract makes this possible — and you were right, endless possibilities. [ethereum](https://ethereum.org/developers/docs/smart-contracts/anatomy/)
+These two layers are completely independent. VMK never changes. Wallet can change any time. The contract just tracks which wallet is currently authorized to update which locatorId. Smart contract makes this possible  and you were right, endless possibilities. [ethereum](https://ethereum.org/developers/docs/smart-contracts/anatomy/)
 
-This is Phase 1 design decision that you need to make NOW before writing any code — because it changes how VMK is derived. BIP39 phrase as VMK root is the right answer. Ready to write the code with this design?
+This is Phase 1 design decision that you need to make NOW before writing any code  because it changes how VMK is derived. BIP39 phrase as VMK root is the right answer. Ready to write the code with this design?
 
 The BIP39 phrase approach from Phase 4 is the ONLY clean solution:
 
@@ -258,7 +258,7 @@ Wallet rotation:
 
   EIP-712
 
-  ERC-4337 Bundlers — decentralized, you do not run them:
+  ERC-4337 Bundlers  decentralized, you do not run them:
 
 Our architecture = IPCM + BIP39 VMK + IPFS + Nostr for fast sync
 
@@ -270,7 +270,7 @@ ERC-4337 USDC:   gas payment in stablecoins
 
 This is ERC-4337 + EIP-7702 session key delegation. The user signs once per day at most. Every individual save is completely invisible.
 
-EIP-7702 — The May 2025 Ethereum Upgrade
+EIP-7702  The May 2025 Ethereum Upgrade
 Session keys = cryptographic delegation
   "This temp key can sign on my behalf" 
   → eliminates popup fatigue ✅
@@ -304,7 +304,7 @@ Front running the attack
 3. Ownership proof     → only YOU can register this locatorId
 
 #
-Stealth Addresses (ERC-5564) — How It Actually Works
+Stealth Addresses (ERC-5564)  How It Actually Works
 
 Two wallets approach:
   Wallet A (public)  → never touches contract

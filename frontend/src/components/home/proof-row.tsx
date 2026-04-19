@@ -1,10 +1,10 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { AlertTriangle, Check, X } from "lucide-react"
-import { keccak256, type Hex } from "viem"
+import type { Hex } from "viem"
 import type { CommitRecord } from "@/lib/query-commits"
-import { FileDrop } from "../shared/file-drop"
+import { PayloadInput, type Payload } from "../shared/payload-input"
 import { KvField } from "../shared/kv-field"
 
 interface ProofRowProps {
@@ -24,36 +24,30 @@ function formatTs(ts: bigint) {
   )
 }
 
-/// A single row of the My commits list. Collapsed by default — expand to
+/// A single row of the My commits list. Collapsed by default  expand to
 /// drop the original file back in, which is hashed locally and compared
 /// to the row's payloadHash (no chain read). Lets the owner confirm they
 /// still hold the bytes that produced the commit.
 export function ProofRow({ record, duplicates }: ProofRowProps) {
   const [open, setOpen] = useState(false)
-  const [file, setFile] = useState<File | null>(null)
+  const [payload, setPayload] = useState<Payload | null>(null)
   const [check, setCheck] = useState<Check>({ kind: "idle" })
-  const seq = useRef(0)
 
   const tsMismatch = record.eventTimestamp !== record.blockTimestamp
 
-  const onFile = async (f: File | null) => {
-    const id = ++seq.current
-    setFile(f)
-    if (!f) {
+  const onPayload = (p: Payload | null) => {
+    setPayload(p)
+    if (!p) {
       setCheck({ kind: "idle" })
       return
     }
-    const buf = await f.arrayBuffer()
-    if (seq.current !== id) return
-    const hash = keccak256(new Uint8Array(buf))
-    if (hash === record.payloadHash) setCheck({ kind: "match" })
-    else setCheck({ kind: "mismatch", hash })
+    if (p.hash === record.payloadHash) setCheck({ kind: "match" })
+    else setCheck({ kind: "mismatch", hash: p.hash })
   }
 
   const closeVerify = () => {
-    seq.current++
     setOpen(false)
-    setFile(null)
+    setPayload(null)
     setCheck({ kind: "idle" })
   }
 
@@ -89,7 +83,7 @@ export function ProofRow({ record, duplicates }: ProofRowProps) {
             onClick={() => setOpen(true)}
             className="text-[12px] text-foreground/70 hover:text-foreground underline underline-offset-4"
           >
-            Verify file
+            Verify
           </button>
         ) : (
           <button
@@ -108,18 +102,18 @@ export function ProofRow({ record, duplicates }: ProofRowProps) {
 
       {open && (
         <div className="flex flex-col gap-3 pt-1">
-          <FileDrop file={file} onFile={onFile} />
+          <PayloadInput payload={payload} onPayload={onPayload} />
           {check.kind === "match" && (
             <div className="flex items-center gap-2 text-[12px] text-foreground">
               <Check className="size-3.5" />
-              File matches this commit.
+              Matches this commit.
             </div>
           )}
           {check.kind === "mismatch" && (
             <div className="flex flex-col gap-1.5">
               <div className="flex items-center gap-2 text-[12px] text-destructive">
                 <X className="size-3.5" />
-                This file does not hash to the committed payload.
+                This does not hash to the committed payload.
               </div>
               <div className="flex items-baseline gap-3 text-[11px] min-w-0">
                 <span className="text-muted-foreground font-mono tracking-wide shrink-0">

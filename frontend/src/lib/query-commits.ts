@@ -28,11 +28,11 @@ const committedEvent = getAbiItem({
 })
 
 /// Query Sepolia for on-chain commits. Either or both filters may be
-/// provided; at least one is required (no unscoped global scan — the
+/// provided; at least one is required (no unscoped global scan  the
 /// event log is public but paying to pull it all over http is pointless
 /// and the use cases in this app never need it).
 ///
-/// Uses the indexed-topic filter on `eth_getLogs` — no indexer, no server.
+/// Uses the indexed-topic filter on `eth_getLogs`  no indexer, no server.
 /// Results are returned earliest-first, which matches the contract's own
 /// guidance: "the first Committed event for a given (identity, payloadHash)
 /// pair is the canonical record."

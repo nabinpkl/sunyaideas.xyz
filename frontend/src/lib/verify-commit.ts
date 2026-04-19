@@ -11,7 +11,7 @@ export type VerifyResult =
 
 /// Confirms a transaction receipt contains a `Committed(identity, payloadHash)`
 /// event from the expected registry, matching the provided identity and hash.
-/// The chain's receipt — not the wallet's "sent" ack — is the source of truth.
+/// The chain's receipt  not the wallet's "sent" ack  is the source of truth.
 export function verifyCommitInReceipt(params: {
   receipt: TransactionReceipt
   registry: `0x${string}`
@@ -40,7 +40,7 @@ export function verifyCommitInReceipt(params: {
         return { ok: true, timestamp: decoded.args.timestamp }
       }
     } catch {
-      // Log from the registry but not a Committed event — keep looking.
+      // Log from the registry but not a Committed event  keep looking.
     }
   }
 

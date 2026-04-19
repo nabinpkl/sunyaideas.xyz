@@ -7,10 +7,10 @@ import { CommitStage } from "./commit-stage"
 import { ProofList } from "./proof-list"
 
 /// Owner home. Gates (wallet + chain) then a two-section layout:
-///   Stage  — drop a file, cross-checked against your own prior commits,
+///   Stage   drop a file, cross-checked against your own prior commits,
 ///            resolves into either a "you already committed this" readout or
 ///            a Commit button.
-///   List   — every commit you've ever made on Sepolia, each row re-verifiable
+///   List    every commit you've ever made on Sepolia, each row re-verifiable
 ///            by dropping the original file back in.
 export function HomePanel() {
   const { open } = useAppKit()
@@ -25,8 +25,8 @@ export function HomePanel() {
       <header className="flex flex-col gap-1.5">
         <h1 className="text-[22px] font-medium tracking-tight">My ideas</h1>
         <p className="text-[13px] text-muted-foreground leading-relaxed">
-          Drop a file. Its hash is signed by your key and written to the
-          blockchain. The file itself never leaves your device.
+          Type your idea here or drop a file. Its hash is signed by your key and
+          written to the blockchain. The content itself never leaves your device.
         </p>
       </header>
 

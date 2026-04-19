@@ -1,8 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Check } from "lucide-react"
-import { keccak256, type Hex } from "viem"
 import { sepolia } from "@reown/appkit/networks"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import {
@@ -20,7 +19,7 @@ import {
 } from "@/lib/contracts"
 import { findCommits } from "@/lib/query-commits"
 import { verifyCommitInReceipt } from "@/lib/verify-commit"
-import { FileDrop } from "../shared/file-drop"
+import { PayloadInput, type Payload } from "../shared/payload-input"
 import { KvField } from "../shared/kv-field"
 
 interface CommitStageProps {
@@ -37,13 +36,13 @@ function formatTs(ts: bigint) {
 /// Staging area at the top of the owner home. Drop-then-decide: a file is
 /// hashed locally, cross-checked against the user's own commits, and the
 /// panel resolves into either a "you already committed this" readout or a
-/// Commit button. No auto-trigger — the user sits with the hash before acting.
+/// Commit button. No auto-trigger  the user sits with the hash before acting.
 export function CommitStage({ address }: CommitStageProps) {
   const qc = useQueryClient()
-  const [file, setFile] = useState<File | null>(null)
-  const [payloadHash, setPayloadHash] = useState<Hex | null>(null)
+  const [payload, setPayload] = useState<Payload | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const hashSeq = useRef(0)
+
+  const payloadHash = payload?.hash ?? null
 
   const { signTypedDataAsync, isPending: isSigning } = useSignTypedData()
   const {
@@ -64,23 +63,13 @@ export function CommitStage({ address }: CommitStageProps) {
     enabled: !!payloadHash && !txHash,
   })
 
-  const handleFile = async (f: File | null) => {
-    const id = ++hashSeq.current
-    setFile(f)
+  const handlePayload = (p: Payload | null) => {
+    setPayload(p)
     setError(null)
-    if (!f) {
-      setPayloadHash(null)
-      return
-    }
-    const buf = await f.arrayBuffer()
-    if (hashSeq.current !== id) return
-    setPayloadHash(keccak256(new Uint8Array(buf)))
   }
 
   const reset = () => {
-    hashSeq.current++
-    setFile(null)
-    setPayloadHash(null)
+    setPayload(null)
     setError(null)
     resetWrite()
   }
@@ -131,7 +120,7 @@ export function CommitStage({ address }: CommitStageProps) {
 
   useEffect(() => {
     if (!committed) return
-    // Commit landed — refresh the list below so the new row appears.
+    // Commit landed  refresh the list below so the new row appears.
     qc.invalidateQueries({
       queryKey: ["commits", "by-identity", address],
     })
@@ -199,7 +188,7 @@ export function CommitStage({ address }: CommitStageProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <FileDrop file={file} onFile={handleFile} disabled={busy} />
+      <PayloadInput payload={payload} onPayload={handlePayload} disabled={busy} />
 
       {payloadHash && (
         <div className="flex items-baseline gap-3 text-[11px] min-w-0">
@@ -222,7 +211,7 @@ export function CommitStage({ address }: CommitStageProps) {
         <div className="flex flex-col gap-3 p-4 border border-border rounded-sm bg-muted/30">
           <div className="flex items-center gap-2 text-[12px] text-foreground">
             <Check className="size-3.5" />
-            You already committed this file.
+            You already committed this.
           </div>
           <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-[12px]">
             <KvField

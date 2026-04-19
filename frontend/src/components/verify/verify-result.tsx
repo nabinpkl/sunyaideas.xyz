@@ -22,7 +22,7 @@ function formatTs(ts: bigint) {
 ///   - one match: single commit, displayed like the CommitReceipt.
 ///   - many matches: the earliest is canonical per the contract; later ones
 ///     are noise (replays of the same signed digest). We show them all,
-///     earliest first, and label the first one "earliest — canonical".
+///     earliest first, and label the first one "earliest  canonical".
 export function VerifyResult({
   payloadHash,
   matches,
@@ -39,7 +39,7 @@ export function VerifyResult({
         <div className="text-[11px] text-muted-foreground leading-relaxed">
           The file was hashed locally and the chain was queried directly.
           Nothing was uploaded. If you expected a match, check that you&apos;re
-          using the exact same file byte-for-byte — any change produces a
+          using the exact same file byte-for-byte  any change produces a
           different hash.
         </div>
         <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-[12px] pt-2">
@@ -93,7 +93,7 @@ function MatchRow({
     <div className="flex flex-col gap-3">
       {canonical && (
         <div className="text-[11px] text-muted-foreground font-mono tracking-wide">
-          earliest — canonical
+          earliest  canonical
         </div>
       )}
       <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-[12px]">

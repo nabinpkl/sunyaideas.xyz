@@ -7,13 +7,13 @@
 Public key crypto does TWO different jobs: [en.wikipedia](https://en.wikipedia.org/wiki/Public-key_cryptography)
 
 ```
-Job 1 — ENCRYPTION (confidentiality):
+Job 1  ENCRYPTION (confidentiality):
   Anyone encrypts with your PUBLIC key
   Only you decrypt with your PRIVATE key
   
   Used by: Email (PGP/S/MIME), file encryption
 
-Job 2 — KEY EXCHANGE (establishing a shared secret):
+Job 2  KEY EXCHANGE (establishing a shared secret):
   Two parties derive the SAME shared secret
   without sending the secret itself
   
@@ -22,7 +22,7 @@ Job 2 — KEY EXCHANGE (establishing a shared secret):
 
 ***
 
-## How Email Uses It (Job 1 — Encryption)
+## How Email Uses It (Job 1  Encryption)
 
 ```
 Bob wants to email Alice secretly:
@@ -44,23 +44,23 @@ Problem with normal email (Gmail etc):
 
 ***
 
-## How HTTPS Uses It (Job 2 — Key Exchange)
+## How HTTPS Uses It (Job 2  Key Exchange)
 
 ```
 HTTPS doesn't encrypt EVERYTHING with public key.
 That would be too slow for streaming data.
 
-Instead — hybrid approach: [web:1503][web:1505]
+Instead  hybrid approach: [web:1503][web:1505]
 
-  Step 1 — Identity (public key):
+  Step 1  Identity (public key):
     Server sends its certificate (contains public key)
     Browser verifies: "yes this is really amazon.com"
     
-  Step 2 — Key exchange (Diffie-Hellman):
+  Step 2  Key exchange (Diffie-Hellman):
     Browser + Server do ECDH to agree on a shared session key
     Nobody else can compute this session key ✅
     
-  Step 3 — Bulk encryption (symmetric):
+  Step 3  Bulk encryption (symmetric):
     All actual data encrypted with that fast session key (AES)
     Public key crypto only used ONCE at the start
 
@@ -108,7 +108,7 @@ The shared secret in ECDH is the common thread:
 
  Same math, three different applications. Ethereum wallets, HTTPS, and Signal are all running the same elliptic curve Diffie-Hellman under the hood. [cloudflare](https://www.cloudflare.com/learning/ssl/how-does-public-key-encryption-work/)
 
-Now — back to building? 😄
+Now  back to building? 😄
 
 Perfect rabbit hole. Here's the full story cleanly. [en.wikipedia](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman)
 
@@ -124,15 +124,15 @@ Eve is watching the network cable between you and Amazon.
 How do you agree on an encryption key with Amazon
 without Eve learning that key?
 
-You can't whisper it — Eve hears everything.
-You can't email it — Eve reads email too.
+You can't whisper it  Eve hears everything.
+You can't email it  Eve reads email too.
 ```
 
 ***
 
 ## The Diffie-Hellman Insight (1976)
 
-Two people can agree on a shared secret **over a public channel** that an eavesdropper is watching — and the eavesdropper learns nothing. [en.wikipedia](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman)
+Two people can agree on a shared secret **over a public channel** that an eavesdropper is watching  and the eavesdropper learns nothing. [en.wikipedia](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman)
 
 ```
 Original version used modular arithmetic.
@@ -142,7 +142,7 @@ Same idea, much smaller keys (256 bits vs 2048 bits).
 
 ***
 
-## How HTTPS Actually Does It — Step By Step
+## How HTTPS Actually Does It  Step By Step
 
 ```
 1. You open amazon.com
@@ -181,7 +181,7 @@ Same idea, much smaller keys (256 bits vs 2048 bits).
 
 ***
 
-## The Brilliant Part — Forward Secrecy
+## The Brilliant Part  Forward Secrecy
 
 ```
 Old HTTPS (RSA):
@@ -193,7 +193,7 @@ Old HTTPS (RSA):
   10 years later Amazon's private key leaks.
   Eve decrypts ALL past conversations. ❌
 
-Modern HTTPS (ECDHE — E = Ephemeral):
+Modern HTTPS (ECDHE  E = Ephemeral):
   a and b are generated FRESH for every single connection
   Thrown away immediately after
   Never stored anywhere
@@ -213,7 +213,7 @@ Modern HTTPS (ECDHE — E = Ephemeral):
 ```
 HTTPS: one ECDH per connection (same key for whole session)
 
-Signal — Double Ratchet:
+Signal  Double Ratchet:
   New ECDH key exchange for EVERY SINGLE MESSAGE
   Each message has its own derived key
   
@@ -241,4 +241,4 @@ Diffie-Hellman (1976)
 
 Same 40-year-old math. Everything you use daily runs on it. [en.wikipedia](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman)
 
-Now — shall we build? 😄
+Now  shall we build? 😄

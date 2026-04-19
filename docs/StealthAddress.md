@@ -12,33 +12,33 @@ Normal wallet address:
 
 Stealth meta-address:
   Bob publishes: "send to my meta-address M"
-  M is NOT an address — it's two public keys
+  M is NOT an address  it's two public keys
   Think of it as a FORMULA, not a destination
 ```
 
 ***
 
-## Step By Step — No Math
+## Step By Step  No Math
 
 ```
-Step 1 — Bob publishes his meta-address M publicly
+Step 1  Bob publishes his meta-address M publicly
           (like an ENS record: nabin.eth → meta-address M)
 
-Step 2 — Alice wants to pay Bob:
+Step 2  Alice wants to pay Bob:
           Alice generates a random number r (her secret)
           Alice computes a brand new address P using:
             r + Bob's meta-address M → P (one-time address)
           Alice sends ETH to P
           Alice also publishes r×G (ephemeral pubkey) on the
-          Announcer contract — just a public noticeboard
+          Announcer contract  just a public noticeboard
 
-Step 3 — Bob scans the Announcer noticeboard:
+Step 3  Bob scans the Announcer noticeboard:
           For every new ephemeral pubkey published:
           Bob uses HIS private key + ephemeral pubkey
           to compute: "is this address mine?"
           When he finds P → YES this is mine ✅
 
-Step 4 — Bob claims:
+Step 4  Bob claims:
           Bob derives the private key for P (pure math, offline)
           Bob now controls P like any normal wallet
           Spends from it directly ✅
@@ -48,7 +48,7 @@ Step 4 — Bob claims:
 
 ***
 
-## The Key Magic — Why Only Bob Can Find It
+## The Key Magic  Why Only Bob Can Find It
 
 ```
 Alice computed P using: r + Bob's PUBLIC keys
@@ -61,10 +61,10 @@ But an observer watching the chain only sees:
   → Zero idea P belongs to Bob ✅
 
 Eve cannot compute P from ephemeral pubkey alone.
-She needs Bob's private key — which only Bob has.
+She needs Bob's private key  which only Bob has.
 ```
 
-This is **Diffie-Hellman** — the same math behind HTTPS/Signal. [chainstack](https://chainstack.com/stealth-addresses-blockchain-transaction-privacy/)
+This is **Diffie-Hellman**  the same math behind HTTPS/Signal. [chainstack](https://chainstack.com/stealth-addresses-blockchain-transaction-privacy/)
 
 ***
 
@@ -85,11 +85,11 @@ Stealth:     Bob has NO IDEA what P will be before Alice pays
 ***
 
 #
-Perfect. Let's do exactly what you said — start simple with one key, see what breaks, then understand why two keys exist. [blog.plan99](https://blog.plan99.net/ecdh-in-the-payment-protocol-cb2f81962c1b?gi=1e5264bfcf12)
+Perfect. Let's do exactly what you said  start simple with one key, see what breaks, then understand why two keys exist. [blog.plan99](https://blog.plan99.net/ecdh-in-the-payment-protocol-cb2f81962c1b?gi=1e5264bfcf12)
 
 ***
 
-## Simple Version — Just ab×G Like HTTPS
+## Simple Version  Just ab×G Like HTTPS
 
 ```
 Bob publishes: B = b×G  (one public key, like normal wallet)
@@ -133,7 +133,7 @@ To SCAN (find your payments):
 
 ***
 
-## The Two-Key Solution — Separation of Powers [vitalik.eth](https://vitalik.eth.limo/general/2023/01/20/stealth.html)
+## The Two-Key Solution  Separation of Powers [vitalik.eth](https://vitalik.eth.limo/general/2023/01/20/stealth.html)
 
 ```
 Bob creates TWO keys:
@@ -146,7 +146,7 @@ Alice uses VIEWING key for ECDH (finding):
 Bob scans with VIEWING key (finding):
   S = v × R = vr×G  ← same S ✅
   Can find all payments ✅
-  Cannot spend — doesn't know b ✅
+  Cannot spend  doesn't know b ✅
 
 Bob spends with SPENDING key (claiming):
   p = b + hash(S)  ← needs b, done offline ✅
@@ -168,7 +168,7 @@ Two-key version:
 
 It's NOT a workaround for contract scanning.
 It IS a separation of: "find my money" vs "spend my money"
-Same reason hardware wallets exist — keep spending key offline.
+Same reason hardware wallets exist  keep spending key offline.
 ```
 
  Vitalik literally says: "the viewing key step and the spending key step are two separate clever cryptographic operations chained together." [blog.plan99](https://blog.plan99.net/ecdh-in-the-payment-protocol-cb2f81962c1b?gi=1e5264bfcf12)
@@ -192,4 +192,4 @@ Stealth (two keys):
   Separation of concerns. Same math. Two roles.
 ```
 
-NOW — pool contract? 😄
+NOW  pool contract? 😄

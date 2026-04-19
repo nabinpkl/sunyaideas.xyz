@@ -4,7 +4,7 @@
 
 ***
 
-## Step 0 — The ONE Property You Need To Know
+## Step 0  The ONE Property You Need To Know
 
 ```
 On an elliptic curve:
@@ -16,7 +16,7 @@ That's it. One-way multiplication. Everything else flows from this.
 
 ***
 
-## Step 1 — Diffie-Hellman (How HTTPS and Signal Work)
+## Step 1  Diffie-Hellman (How HTTPS and Signal Work)
 
 Imagine Alice and Bob want a shared secret but can only communicate over a public channel that Eve reads: [chainstack](https://chainstack.com/stealth-addresses-blockchain-transaction-privacy/)
 
@@ -28,7 +28,7 @@ G is a public fixed point everyone knows
 Alice publishes: A = a×G = 3G
 Bob   publishes: B = b×G = 5G
 
-Eve sees: A, B, G — but NOT a or b
+Eve sees: A, B, G  but NOT a or b
 
 Alice computes: a × B = 3 × 5G = 15G
 Bob   computes: b × A = 5 × 3G = 15G
@@ -41,7 +41,7 @@ This is EXACTLY how HTTPS establishes a session key. Your browser and the server
 
 ***
 
-## Step 2 — Now Stealth Addresses Are Just Diffie-Hellman + One Twist
+## Step 2  Now Stealth Addresses Are Just Diffie-Hellman + One Twist
 
 ```
 Bob has:
@@ -88,12 +88,12 @@ Nobody else does.
 
 So:
   Alice: can compute P (the address) ✅
-  Alice: cannot compute p (the private key) ❌ — needs b
+  Alice: cannot compute p (the private key) ❌  needs b
   Bob:   can compute p (has b + knows hash(S)) ✅
   Eve:   sees P and R, cannot compute p or S ❌
 ```
 
- It's not magic — it's just Diffie-Hellman applied to key derivation instead of session encryption. [binance](https://www.binance.com/en/square/post/1404613253930)
+ It's not magic  it's just Diffie-Hellman applied to key derivation instead of session encryption. [binance](https://www.binance.com/en/square/post/1404613253930)
 
 ***
 
@@ -111,7 +111,7 @@ Same math. Different application. [chainstack](https://chainstack.com/stealth-ad
 Ready to build now? 😄
 
 
-Job 2 — KEY EXCHANGE (establishing a shared secret):
+Job 2  KEY EXCHANGE (establishing a shared secret):
   Two parties derive the SAME shared secret
   without sending the secret itself
   

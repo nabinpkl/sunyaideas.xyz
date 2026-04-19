@@ -11,18 +11,18 @@ import {SignatureChecker} from "@openzeppelin/contracts/utils/cryptography/Signa
 ///
 ///         A signer presents (identity, payloadHash, sig).
 ///         The contract verifies the signature and emits a timestamped event.
-///         The event log IS the database — there is zero on-chain storage.
+///         The event log IS the database  there is zero on-chain storage.
 ///
 /// @dev    Versioning: intentionally non-upgradeable.
 ///         New version = redeploy at new address = new EIP-712 domain.
 ///         Signatures from v1 cannot be replayed against v2.
 ///
 /// @dev    Signature routing (2026):
-///         1. ECDSA.tryRecover  — plain EOA
-///                              — EIP-7702 accounts signing with raw private key
+///         1. ECDSA.tryRecover   plain EOA
+///                               EIP-7702 accounts signing with raw private key
 ///                                (MetaMask Smart Accounts Kit, post-Pectra observed behavior)
-///         2. ERC-1271 fallback — native smart accounts (Safe, Coinbase SW, etc.)
-///                              — EIP-7702 accounts delegated via SignerERC7702
+///         2. ERC-1271 fallback  native smart accounts (Safe, Coinbase SW, etc.)
+///                               EIP-7702 accounts delegated via SignerERC7702
 ///
 ///         OZ closed issue #5707 saying EIP-7702 users who delegate to a
 ///         SignerERC7702 contract get correct ERC-1271 routing. However,
@@ -32,10 +32,10 @@ import {SignatureChecker} from "@openzeppelin/contracts/utils/cryptography/Signa
 ///
 /// @dev    ERC-7739 (nested EIP-712 anti-phishing) is not implemented here.
 ///         It lives inside the identity contract (smart account), not the registry.
-///         CommitRegistry calls isValidSignature and receives true/false — it never
+///         CommitRegistry calls isValidSignature and receives true/false  it never
 ///         sees the nested structure. Nothing to add here.
 ///
-/// @dev    REPLAY / EVENT SPAM — accepted trade-off, documented:
+/// @dev    REPLAY / EVENT SPAM  accepted trade-off, documented:
 ///         Anyone who obtained a valid (identity, payloadHash, sig) triple off-chain
 ///         can re-broadcast it, emitting duplicate Committed events. This is a known
 ///         and deliberate design choice. Rationale:
@@ -65,7 +65,7 @@ contract CommitRegistry is EIP712 {
     // Errors
     // ─────────────────────────────────────────────────────────────────────────
 
-    /// @dev Custom error — cheaper than require(bool, string) on revert path.
+    /// @dev Custom error  cheaper than require(bool, string) on revert path.
     ///      Gas saved vs string error: ~150 gas at call site + calldata savings.
     error InvalidSignature();
 
@@ -74,7 +74,7 @@ contract CommitRegistry is EIP712 {
     // Changing this struct requires a redeploy. That is the version mechanism.
     //
     // `title` and `description` are hardcoded strings the wallet shows to the
-    // user at sign-time. They have no effect on chain semantics — the contract
+    // user at sign-time. They have no effect on chain semantics  the contract
     // does not store them and does not emit them. They exist to turn an
     // otherwise opaque signature prompt into something a human can read and
     // reject. Because they are folded into the digest, the contract and the
@@ -103,7 +103,7 @@ contract CommitRegistry is EIP712 {
     /// @param  payloadHash keccak256 of whatever the user committed off-chain.
     ///                     Plaintext never leaves the user's device.
     /// @param  timestamp   block.timestamp at the time of the commit.
-    ///                     Validators can skew ~12 seconds — irrelevant for
+    ///                     Validators can skew ~12 seconds  irrelevant for
     ///                     evidence that establishes weeks, months, or years.
     ///
     /// @dev    Both fields indexed for cheap client-side filtering.
@@ -121,7 +121,7 @@ contract CommitRegistry is EIP712 {
     // ─────────────────────────────────────────────────────────────────────────
 
     /// @dev Domain name is deliberately generic ("CommitRegistry") rather than
-    ///      any product brand. The contract has no owner, no admin, no brand —
+    ///      any product brand. The contract has no owner, no admin, no brand 
     ///      if the frontend that originally served it goes away, any other
     ///      frontend (or CLI, or wallet's raw tx composer) can keep using it
     ///      without misleading users about what they're signing.
@@ -141,7 +141,7 @@ contract CommitRegistry is EIP712 {
     ///                     v1+: smart account address (passkey-backed, Safe, etc.)
     ///                     The contract is identity-type-agnostic by design.
     /// @param  payloadHash keccak256 of the content being committed.
-    ///                     What you hash is your choice — text, file, JSON, anything.
+    ///                     What you hash is your choice  text, file, JSON, anything.
     ///                     The contract only stores the hash. Plaintext stays local.
     /// @param  sig         EIP-712 signature over Commit(identity, payloadHash).
     ///                     Accepts both 65-byte ECDSA and arbitrary-length ERC-1271 bytes.
@@ -172,7 +172,7 @@ contract CommitRegistry is EIP712 {
     // ─────────────────────────────────────────────────────────────────────────
 
     /// @notice Returns the exact EIP-712 digest the caller must sign.
-    ///         Call this from the frontend before asking the wallet to sign —
+    ///         Call this from the frontend before asking the wallet to sign 
     ///         confirms that client-side digest construction matches on-chain.
     ///         The wallet will display: Sunya Ideas | title | description |
     ///         identity | payloadHash.
@@ -194,7 +194,7 @@ contract CommitRegistry is EIP712 {
     }
 
     /// @notice Returns the current EIP-712 domain separator.
-    ///         Recomputed dynamically by OZ EIP712 base — safe across forks.
+    ///         Recomputed dynamically by OZ EIP712 base  safe across forks.
     ///         Pass this to viem's signTypedData as the domain reference.
     function domainSeparator() external view returns (bytes32) {
         return _domainSeparatorV4();

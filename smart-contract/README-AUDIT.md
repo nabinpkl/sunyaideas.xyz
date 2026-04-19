@@ -1,4 +1,4 @@
-# CommitRegistry — Audit Notes
+# CommitRegistry  Audit Notes
 
 | Base mainnet | 0x3F198BfE7F5CAc7d8825e008e9122e22E143C8F7 | 44889582 | 0xc628b3cdd9469093e5a7b66084c89e1e4ab9d4cfa660cb76bb79d2b9d346f009 | b5e13b230dede7890db1b9a00d7c3beba246c3c5 |
 
@@ -19,9 +19,9 @@ If you are auditing this contract, start here.
 
 Three OZ primitives are in the trusted base:
 
-- `EIP712` — domain separator, `_hashTypedDataV4`, dynamic chainid handling
-- `ECDSA.tryRecover` — plain-EOA and EIP-7702 raw-key recovery, rejects high-s
-- `SignatureChecker.isValidERC1271SignatureNow` — smart-account fallback, swallows reverts
+- `EIP712`  domain separator, `_hashTypedDataV4`, dynamic chainid handling
+- `ECDSA.tryRecover`  plain-EOA and EIP-7702 raw-key recovery, rejects high-s
+- `SignatureChecker.isValidERC1271SignatureNow`  smart-account fallback, swallows reverts
 
 No other dependencies. No custom crypto.
 
@@ -41,7 +41,7 @@ All tests live in [test/CommitRegistry.t.sol](test/CommitRegistry.t.sol).
 | Signature malleability (high-s) rejected | [`test_Commit_RevertsOnHighSSignature`](test/CommitRegistry.t.sol#L173) |
 | ERC-1271 smart-account path validates correctly | [`test_Commit_EmitsEvent_OnValidERC1271`](test/CommitRegistry.t.sol#L192) |
 | ERC-1271 rejection path reverts with `InvalidSignature` | [`test_Commit_RevertsWhenERC1271Rejects`](test/CommitRegistry.t.sol#L207) |
-| Hostile ERC-1271 that reverts cannot brick callers — normalized to `InvalidSignature` | [`test_Commit_RevertsGracefullyOnERC1271Revert`](test/CommitRegistry.t.sol#L216) |
+| Hostile ERC-1271 that reverts cannot brick callers  normalized to `InvalidSignature` | [`test_Commit_RevertsGracefullyOnERC1271Revert`](test/CommitRegistry.t.sol#L216) |
 | Any 32-byte value is an acceptable `payloadHash` (no content constraints) | [`testFuzz_Commit_AcceptsAnyPayloadHash`](test/CommitRegistry.t.sol#L232) |
 | Random non-65-byte signature bytes are always rejected | [`testFuzz_Commit_RejectsRandomSignatureBytes`](test/CommitRegistry.t.sol#L237) |
 | Replay of a valid triple is accepted by design and emits a later-timestamped event | [`test_Commit_AcceptsDuplicate_ReplayByDesign`](test/CommitRegistry.t.sol#L145) |
@@ -63,7 +63,7 @@ Why we accepted it:
 - Preventing replay requires an on-chain seen-digest set (~20 000 gas per
   commit). That doubles legitimate-user cost to deter an attack whose
   attacker already pays full L1 gas per attempt.
-- Replay cannot forge a new commitment — the signer already authorized
+- Replay cannot forge a new commitment  the signer already authorized
   this `payloadHash` for this `identity`. It can only produce duplicate
   events.
 - Semantic correctness is preserved: earliest `block.timestamp` per
@@ -98,8 +98,8 @@ These are out of scope by design, not oversights.
 If the user shared their idea off-platform (conversation, message, public
 post) before committing, anyone with that plaintext can compute the same
 `payloadHash` and commit it first. The contract protects what you commit
-at the moment you commit it. The honest use pattern — documented in
-[AGENTS.md](../AGENTS.md) under *What the product is not* — is **commit
+at the moment you commit it. The honest use pattern  documented in
+[AGENTS.md](../AGENTS.md) under *What the product is not*  is **commit
 first, share later**. No on-chain mechanism can protect against prior
 disclosure.
 
@@ -108,7 +108,7 @@ disclosure.
 A mempool observer who sees a pending `commit` tx learns the
 `payloadHash` (already public at the moment of submission). They cannot
 forge the signature, so they cannot commit under the user's identity.
-They can commit the same hash under their *own* identity — but since
+They can commit the same hash under their *own* identity  but since
 their identity differs, both commits co-exist without conflict. No
 first-to-commit ordering is promised by the contract; ordering in a
 dispute falls back to block timestamp across distinct identities, which
@@ -118,7 +118,7 @@ is an off-chain evidentiary question.
 
 ERC-7739's nested EIP-712 anti-phishing lives inside the identity contract
 (smart account), not inside the registry. `CommitRegistry` only sees the
-`bool` returned from `isValidSignature` — it cannot inspect nesting.
+`bool` returned from `isValidSignature`  it cannot inspect nesting.
 Delegating this to the identity contract is correct per the ERC and
 documented at [src/CommitRegistry.sol:33-36](src/CommitRegistry.sol#L33-L36).
 
@@ -143,7 +143,7 @@ with the "no owner, no admin, no configurable parameters" stance at
 
 ### Reentrancy
 
-The `commit` function has no state to corrupt — it verifies and emits.
+The `commit` function has no state to corrupt  it verifies and emits.
 Reentrancy from a hostile ERC-1271 `isValidSignature` is harmless and
 noted at [src/CommitRegistry.sol:211](src/CommitRegistry.sol#L211).
 

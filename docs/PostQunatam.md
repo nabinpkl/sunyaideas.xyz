@@ -12,7 +12,7 @@ TLS 1.0/1.1/1.2 with RSA key exchange:
   But TLS 1.2 servers using RSA still existed in production
   until 2022-2023 in many places [web:1540]
   
-  So yes — a LOT of historical traffic was encrypted with RSA.
+  So yes  a LOT of historical traffic was encrypted with RSA.
 ```
 
 ***
@@ -44,12 +44,12 @@ TLS 1.0/1.1/1.2 with RSA key exchange:
 ## So ECDH Doesn't Fully Escape Either
 
 ```
-Wait — ECDH also uses elliptic curves.
+Wait  ECDH also uses elliptic curves.
 Shor's algorithm breaks elliptic curve discrete log too.
 
 So recorded ECDH traffic is ALSO vulnerable to quantum? ✅ Yes.
 
-BUT — forward secrecy saves you:
+BUT  forward secrecy saves you:
 
   RSA (old):
     Eve records: encrypted(sessionKey) with Amazon's long-term RSA key
@@ -74,13 +74,13 @@ BUT — forward secrecy saves you:
 
 ***
 
-## The Real Solution — Post-Quantum Cryptography (PQC)
+## The Real Solution  Post-Quantum Cryptography (PQC)
 
 ```
 NIST finalised post-quantum standards in 2024:
 
-  ML-KEM (Kyber) — key exchange, quantum-safe
-  ML-DSA (Dilithium) — signatures, quantum-safe
+  ML-KEM (Kyber)  key exchange, quantum-safe
+  ML-DSA (Dilithium)  signatures, quantum-safe
   
   These are based on lattice problems, not elliptic curves.
   Shor's algorithm doesn't work on them.
@@ -115,4 +115,4 @@ Post-quantum (ML-KEM, 2024+):
 
  The uncomfortable reality: if you sent anything sensitive over HTTPS before 2018, assume a nation-state will eventually read it. [cyberresilience](https://cyberresilience.com/blog/when-will-quantum-decryption-become-practical/)
 
-Now — PLEASE can we build the contracts? 😄
+Now  PLEASE can we build the contracts? 😄

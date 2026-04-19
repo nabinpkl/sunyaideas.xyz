@@ -7,7 +7,7 @@ import {CommitRegistry} from "../src/CommitRegistry.sol";
 
 /// @dev Minimal ERC-1271 identity. isValidSignature returns the magic value iff
 ///      the digest matches a single preapproved digest set by the owner.
-///      Deliberately does not recover a signer — we just need to prove the
+///      Deliberately does not recover a signer  we just need to prove the
 ///      ERC-1271 fallback path fires correctly.
 contract MockERC1271 is IERC1271 {
     bytes32 public approvedDigest;
@@ -27,7 +27,7 @@ contract MockERC1271 is IERC1271 {
 
 /// @dev Identity contract whose isValidSignature always reverts.
 ///      Used to prove OZ's SignatureChecker catches the revert and returns
-///      false rather than propagating it — so commit() always fails with
+///      false rather than propagating it  so commit() always fails with
 ///      InvalidSignature, never with an unexpected error type.
 contract RevertingERC1271 {
     function isValidSignature(
@@ -134,7 +134,7 @@ contract CommitRegistryTest is Test {
         // Signature valid on current chain.
         registry.commit(signer, payloadHash, sig);
 
-        // Replay attempt on a different chain — same calldata, different chainid.
+        // Replay attempt on a different chain  same calldata, different chainid.
         vm.chainId(999);
         vm.expectRevert(CommitRegistry.InvalidSignature.selector);
         registry.commit(signer, payloadHash, sig);
@@ -195,7 +195,7 @@ contract CommitRegistryTest is Test {
         bytes32 digest = registry.buildDigest(address(account), payloadHash);
         account.approve(digest);
 
-        // The mock ignores signature bytes — any non-empty blob will do.
+        // The mock ignores signature bytes  any non-empty blob will do.
         bytes memory sig = hex"00";
 
         vm.expectEmit(true, true, false, false, address(registry));
@@ -239,7 +239,7 @@ contract CommitRegistryTest is Test {
         bytes calldata badSig
     ) public {
         // Skip the vanishingly rare case where fuzzed bytes happen to recover
-        // to our signer — keccak collision, effectively impossible.
+        // to our signer  keccak collision, effectively impossible.
         vm.assume(badSig.length != 65);
         vm.expectRevert(CommitRegistry.InvalidSignature.selector);
         registry.commit(signer, payloadHash, badSig);

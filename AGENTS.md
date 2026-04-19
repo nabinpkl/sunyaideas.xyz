@@ -1,7 +1,7 @@
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+This version has breaking changes  APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
 
@@ -17,8 +17,8 @@ underneath?
 A user has an idea. They commit a cryptographic hash of that idea
 to a public blockchain under their own key. The commit is immutable,
 timestamped by the chain, and signed by the user. Later, if the idea
-becomes contested — in a dispute, a patent proceeding, a priority
-argument, an academic scoop — the user can reveal the original text
+becomes contested  in a dispute, a patent proceeding, a priority
+argument, an academic scoop  the user can reveal the original text
 and prove it hashes to the commit recorded on chain at that time.
 
 The chain provides one piece of cryptographically anchored evidence
@@ -60,7 +60,7 @@ be faked or backdated. The rest of your case is your own.
   cannot retroactively protect anything you've already disclosed
   elsewhere. The honest use pattern is: commit first, share later.
 - Not a complete authorship proof. A commit is one piece of evidence.
-  A strong case combines it with other evidence the user holds —
+  A strong case combines it with other evidence the user holds 
   drafts, witnesses, related work, corroborating communications.
 - Not a business. The lab studies the primitive; it does not monetize it.
 
@@ -69,8 +69,8 @@ be faked or backdated. The rest of your case is your own.
 Primary questions (tested in v0):
 
 - Can a commit primitive be delivered with zero Sunya-operated
-  infrastructure — user brings keys, user submits transactions,
-  user pays gas — and still feel coherent to use?
+  infrastructure  user brings keys, user submits transactions,
+  user pays gas  and still feel coherent to use?
 - How small can the on-chain surface be while still supporting an
   honest commit-reveal flow?
 
@@ -162,7 +162,7 @@ is deferred to later layers, which are additive.
 - Key rotation, revocation, recovery flows (future layer)
 - Local storage of plaintexts, encrypted or otherwise (future layer)
 - Commit history view (future layer)
-- Rich content types — markdown, files, attachments (future layer)
+- Rich content types  markdown, files, attachments (future layer)
 - Shareable proof artifacts or verify URLs (future layer)
 - Gasless onboarding / paymaster / ERC-4337 (future layer)
 - Multi-device access (future layer)
@@ -171,7 +171,7 @@ is deferred to later layers, which are additive.
 ### Why this split
 
 The v0 goal is to prove the commit primitive works end-to-end with
-real users, their real wallets, and a real chain — with the minimum
+real users, their real wallets, and a real chain  with the minimum
 possible surface area. Every feature deferred above adds complexity
 that is not required to validate the core thesis. Each later layer
 adds only client and UI code; the v0 contract is treated as fixed

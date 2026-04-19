@@ -2,7 +2,7 @@ Great question. You found the exact flaw that killed RSA key exchange in HTTPS. 
 
 ***
 
-## Your Suggestion — Ephemeral RSA Keys
+## Your Suggestion  Ephemeral RSA Keys
 
 You're thinking:
 
@@ -22,7 +22,7 @@ Throw it away
 **Two reasons:** [reddit](https://www.reddit.com/r/networking/comments/16vcnh4/chrome_says_rsa_key_exchange_is_obsolete_under/)
 
 ```
-Problem 1 — RSA key generation is EXPENSIVE:
+Problem 1  RSA key generation is EXPENSIVE:
   
   RSA requires finding two large prime numbers.
   Generating a 2048-bit RSA keypair: ~10-100ms on a server
@@ -36,7 +36,7 @@ Problem 1 — RSA key generation is EXPENSIVE:
   Same security level at 256 bits vs 2048 bits.
   ECDH wins easily on performance alone.
 
-Problem 2 — "Harvest Now, Decrypt Later" attack:
+Problem 2  "Harvest Now, Decrypt Later" attack:
   
   Eve records all encrypted HTTPS traffic today.
   Waits 10-15 years.
@@ -128,6 +128,6 @@ ML-KEM / Kyber:       ✅ forward secrecy, ✅ fast, ✅ quantum-safe
                        Being rolled out in TLS 1.3 right now (2025-2026)
 ```
 
-The direction is clear — everything moves toward ephemeral keys and forward secrecy. [reddit](https://www.reddit.com/r/networking/comments/16vcnh4/chrome_says_rsa_key_exchange_is_obsolete_under/)
+The direction is clear  everything moves toward ephemeral keys and forward secrecy. [reddit](https://www.reddit.com/r/networking/comments/16vcnh4/chrome_says_rsa_key_exchange_is_obsolete_under/)
 
-Now — shall we really build? 😄
+Now  shall we really build? 😄
