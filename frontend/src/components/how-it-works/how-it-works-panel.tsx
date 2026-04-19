@@ -26,7 +26,7 @@ export function HowItWorksPanel() {
         <h1 className="text-[30px] font-medium tracking-tight">
           How it works
         </h1>
-        <p className="text-[16px] text-muted-foreground leading-relaxed">
+        <p className="text-[16px] text-foreground/90 leading-relaxed">
           Sunya is an idea commit registry. You write an idea on your device, and a
           cryptographic fingerprint of that text is signed by your key and
           written to a public blockchain. Only the fingerprint is ever sent
@@ -243,7 +243,7 @@ function Section({
   return (
     <section className="flex flex-col gap-4">
       <h2 className="text-[18px] font-medium tracking-tight">{title}</h2>
-      <div className="flex flex-col gap-4 text-[16px] text-muted-foreground leading-relaxed">
+      <div className="flex flex-col gap-4 text-[16px] text-foreground/90 leading-relaxed">
         {children}
       </div>
     </section>
