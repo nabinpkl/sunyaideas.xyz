@@ -95,7 +95,7 @@ export function WalletButton() {
       className="ml-1 flex items-center gap-2 px-4 h-10 rounded-sm text-[14px] text-muted-foreground hover:text-foreground hover:bg-foreground/5 transition-colors font-mono tracking-tight"
     >
       <Wallet className="size-4.5 shrink-0" />
-      <span className="hidden sm:block">connect</span>
+      <span className="hidden sm:block">Connect Wallet</span>
     </button>
   )
 }
