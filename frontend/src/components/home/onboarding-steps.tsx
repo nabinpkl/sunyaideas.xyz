@@ -21,19 +21,19 @@ const steps: Step[] = [
     id: "02",
     title: "Type or drop your idea",
     description: "Content is hashed locally in your browser. The plaintext never leaves your device, ensuring total privacy.",
-    image: "/images/hashing.png",
+    image: "/images/hash.png",
   },
   {
     id: "03",
     title: "Sign and submit",
     description: "You sign and pay gas. Only the hash goes on chain—a permanent, unforgeable proof of your idea.",
-    image: "/images/commitment.png",
+    image: "/images/sign.png",
   },
 ]
 
 export function OnboardingSteps({ onConnect }: { onConnect: () => void }) {
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {steps.map((step, index) => (
           <motion.div

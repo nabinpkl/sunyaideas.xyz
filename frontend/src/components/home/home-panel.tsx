@@ -30,9 +30,11 @@ export function HomePanel() {
   const fallbackChain = supportedChains[0]
 
   return (
-    <section className="flex flex-col gap-12 py-12 max-w-5xl mx-auto px-4 md:px-0">
+    <section className="flex flex-col gap-12 py-8 max-w-5xl mx-auto px-4 md:px-0">
       <header className="flex flex-col gap-3">
-        <h1 className="text-[30px] font-medium tracking-tight">My ideas</h1>
+        <h1 className="text-[30px] font-medium tracking-tight">
+          {isConnected ? "My ideas" : "Commit an idea"}
+        </h1>
         <p className="text-[16px] text-foreground/90 leading-relaxed">
           {isConnected
             ? "Type your idea here or drop a file. Its hash is signed by your key and written to the blockchain. The content itself never leaves your device."
