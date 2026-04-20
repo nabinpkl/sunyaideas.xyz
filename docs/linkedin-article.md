@@ -1,8 +1,17 @@
 # Why "Simple" is still the hardest thing to build and use - A Decentralized Case Study
 
-This weekend I worked on a primitive blockchain tool sunyaideas.xyz The pitch is simple. You have a thought. Your browser hashes it locally, your wallet signs the hash, and the signature lands on a public chain under your key at a timestamp nobody can forge. If the idea is ever contested, you reveal the original text and anyone can confirm you committed exactly that, on exactly that date, under exactly that key.
+I built a primitive blockchain tool called [sunyaideas.xyz](https://www.sunyaideas.xyz/how-it-works) The pitch is simple. You thought of an idea. Type/Upload it. Your browser hashes it locally, your wallet signs the hash, and the signature lands on a public blockchain under your key at a timestamp nobody can forge. 
 
-The cryptography is clean. The user experience is not.
+If the idea is ever contested, you reveal the original text and anyone can confirm you committed exactly that, on exactly that date, under exactly that key.
+
+And blockchain has already been used to prove court cases. 
+For examples: 
+
+- [Huatai Yimei Culture Media Co., Ltd. v. Shenzhen Daotong Technology Development Co., Ltd 2018](https://www.gklaw.com/Insights/Using-Blockchain-in-the-Admission-of-Evidence-Chinese-Court-Leads-the-Way.htm)
+
+- [United States v. Sterlingov - a U.S. District Court case in 2024](https://assetforfeiturelaw.us/wp-content/uploads/2024/03/United-States-v-Sterlingov.pdf)
+
+The cryptography is clean. Blockchain evidence is admissible. The user experience is not.
 
 To save one idea, a normal person has to install a wallet, learn what a seed phrase is, open a Coinbase account, clear KYC, buy ETH, move it to their wallet, pick the right chain, and not fall for a phishing popup. That is a lot of sharp corners for what should feel like pressing save.
 

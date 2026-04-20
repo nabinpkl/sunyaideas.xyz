@@ -1,33 +1,43 @@
-Ever have an idea and immediately worry someone will move on it before you? 
-Or you want to prove you had the thought first without actually telling anyone what it is yet?
 
-I spent this weekend to know more on how frictionless can you be without compromising decentralization.
+The math is clean. The experience is a mess.
 
-Built a small experiment called [sunyaideas.xyz](https://www.sunyaideas.xyz/how-it-works) to solve that specific type of anxiety.
+Question I was chasing: How frictionless can a decentralized tool get before it stops being decentralized?
 
-The tech is pretty clean. You type the idea in your browser. It hashes it locally. Your wallet signs the hash. That signature hits a public blockchain with a timestamp that nobody can mess with. 
+Built [sunyaideas.xyz](https://www.sunyaideas.xyz/how-it-works) to find out.
 
-If anyone ever contests who was first, you reveal the original text. Anyone can re-hash it and see it matches the signature you put on-chain months ago.
+It solves a specific kind of anxiety. You have an idea. You want to prove you had it first. You don't want to tell anyone what it is yet.
 
-The best part? **There is no Sunya server.** No database. No accounts. The plaintext never leaves your machine. Even if I deleted the website tomorrow, your proof stays on the chain forever.
+**How it works:**
+* You type the idea in your browser. It hashes locally.
+* Your wallet signs the hash.
+* Signature lands on a public chain with a timestamp.
+* If someone contests it later, you reveal the text.
+* Anyone can re-hash it and confirm it matches what you committed months ago.
 
-But here is the problem. 
+Courts already accept this kind of thing as evidence:
+* [Huatai Yimei v. Shenzhen Daotong (2018)](https://www.gklaw.com/Insights/Using-Blockchain-in-the-Admission-of-Evidence-Chinese-Court-Leads-the-Way.htm)
+* [United States v. Sterlingov (2024)](https://assetforfeiturelaw.us/wp-content/uploads/2024/03/United-States-v-Sterlingov.pdf)
 
-I tried to walk through the flow as a normal person. It is brutal. To save one simple idea, you have to:
+No Sunya server. No database. No accounts. The plaintext never leaves your machine. If I deleted the site tomorrow, your proof still sits on chain.
 
-* Figure out what a seed phrase is and why you are terrified of losing it.
-* Open an exchange account and wait for KYC approval.
-* Choose the "right" chain (Base? Mainnet?).
-* Buy crypto.
-* Not freak out when a "Sign Message" popup shows a bunch of hex code.
-* Hope gas fees don't spike while you are clicking save.
+That part was easy.
 
-The math is ready. The math works. But the experience is a mess. 
+**Then I walked the flow as a normal person. Brutal.**
 
-We have built these incredibly secure engines, but we are still asking people to build the car themselves just to drive to the store.
+To save one idea you have to:
+* Learn what a seed phrase is and why losing it ruins you
+* Open an exchange, sit through KYC
+* Pick a chain. Base? Mainnet? Who knows
+* Buy crypto
+* Stare at a Sign Message popup full of hex and click yes anyway
+* Hope gas doesn't spike mid-click
 
-**Honestly, making this simple is way harder than making it work.** That is what the crypto community has been grinding on for the past decade. I am not here to bash the tech. I am building alongside it. 
+We built incredible engines. We are still asking people to assemble the car in the driveway before they can drive to the store.
 
-The main challenge now is finding that balance: 
+Making this simple is harder than making it work. The community has been grinding on this for a decade and every shortcut I found in 2026 costs something. A paymaster. An MPC server. A passkey cloud. Friction does not disappear. It just moves somewhere else.
 
-    How to be frictionless without compromising on being decentralized.
+Not bashing the tech. Building alongside it.
+
+Wrote up every tradeoff I ran into in the article below.
+
+#Blockchain #Solidity #UX #Web3
