@@ -26,7 +26,7 @@ const steps: Step[] = [
   {
     id: "03",
     title: "Sign and submit",
-    description: "You sign and pay gas. Only the hash goes on chain—a permanent, unforgeable proof of your idea.",
+    description: "You sign and pay gas. Only the hash goes on chain. A permanent, unforgeable proof of your idea.",
     image: "/images/sign.png",
   },
 ]

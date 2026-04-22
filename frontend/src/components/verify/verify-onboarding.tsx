@@ -140,7 +140,7 @@ export function VerifyOnboarding({ onConnect, onManual }: { onConnect: () => voi
           onClick={onManual}
           className="text-[13px] text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
         >
-          Or verify without connecting — just pick a chain →
+          Or verify without connecting just pick a chain →
         </button>
       </div>
     </div>

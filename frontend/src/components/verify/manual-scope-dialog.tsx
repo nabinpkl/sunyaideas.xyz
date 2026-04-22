@@ -59,7 +59,7 @@ export function ManualScopeDialog({
           <DialogTitle>Verify without a wallet</DialogTitle>
           <DialogDescription>
             Pick a chain to query directly over public RPC. Optionally narrow
-            results to a specific committer address. No wallet is needed — the
+            results to a specific committer address. No wallet is needed the
             payload is hashed locally and the chain is read, nothing is sent.
           </DialogDescription>
         </DialogHeader>
